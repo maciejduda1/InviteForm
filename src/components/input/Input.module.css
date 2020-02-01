@@ -1,0 +1,8 @@
+.Form__Input_container {
+  padding: 20px 5px;
+}
+
+.Form__Input_component {
+  border: none;
+  border-bottom: 1px solid gold;
+}

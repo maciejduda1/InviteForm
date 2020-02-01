@@ -1,0 +1,18 @@
+.Header__container {
+  width: 100%;
+}
+
+.Header__list {
+  display: flex;
+  justify-content: flex-end;
+  height: 30px;
+  align-items: center;
+  list-style: none;
+}
+
+.Header__link {
+  color: gold;
+}
+
+.Header__link_hover {
+}
