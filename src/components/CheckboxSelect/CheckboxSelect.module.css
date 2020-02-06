@@ -1,0 +1,9 @@
+.container {
+    display: inline-flex;
+    align-items: center;
+    padding: 15px;
+}
+
+.label {
+    padding-left: 20px;
+}

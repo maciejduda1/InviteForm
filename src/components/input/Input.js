@@ -2,21 +2,27 @@ import React from "react";
 import PropTypes from "prop-types";
 import styles from "./Input.module.css";
 
-const Input = ({ name, value }) => {
+const Input = ({ label, field }) => {
+
   return (
-    <div className={styles.Form__Input_container}>
+    <div className={styles.inputContainer}>
       <input
-        className={styles.Form__Input_component}
-        name={name}
-        value={value}
+        type="text"
+        required
+        className={styles.Input}
+        autoComplete="username"
+        {...field}
       />
+      <label htmlFor={field.name} className={styles.Label}>
+        {label}
+      </label>
     </div>
   );
 };
 
 Input.propTypes = {
-  name: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired
+  label: PropTypes.string.isRequired,
+  field: PropTypes.any.isRequired,
 };
 
 export default Input;

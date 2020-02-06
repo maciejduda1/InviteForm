@@ -1,8 +1,45 @@
-.Form__Input_container {
+.inputContainer {
   padding: 20px 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
 }
 
-.Form__Input_component {
+.Input {
+  min-height: 55px;
+  width: 100%;
   border: none;
-  border-bottom: 1px solid gold;
+  border: 4px solid #1E555C;
+  background: #413D3C;
+  z-index: 2;
+  padding-left: 15px;
+  font-size: 1rem;
+  border-radius: 4px;
+}
+
+.Input:valid, .Input:focus, .Input:active {
+  background: #413D3C;
+  border: 4px solid #1E555C;
+  outline: none;
+}
+
+.Label {
+  position: absolute;
+  text-align: left;
+  top: 32.5px;
+  left: 15px;
+  transition: .3s;
+  z-index: 1;
+}
+
+.Input:focus + .Label, .Input:valid + .Label {
+  transition: .3s;
+  top: 10px;
+  background: #413D3C;
+  z-index: 3;
+}
+
+.Input.TextArea {
+  padding: 15px;
 }

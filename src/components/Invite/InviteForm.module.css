@@ -1,0 +1,19 @@
+.formContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.formContent {
+    border-radius: 4px;
+    padding: 25px; 
+    width: 340px;
+    min-height: 500px;
+    background-color: #413D3C;
+    color: white;
+}
+
+.checkboxes {
+    display: flex;
+    flex-direction: column;
+}
