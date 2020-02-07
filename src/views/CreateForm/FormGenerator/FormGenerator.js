@@ -10,7 +10,6 @@ const FormGenerator = ({ formFields }) => {
     const [form, setFormFields] = React.useState();
     const initialValues = {
         title: '',
-        name: true,
         fields: []
 
     }
