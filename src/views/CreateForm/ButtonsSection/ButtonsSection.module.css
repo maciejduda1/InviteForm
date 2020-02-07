@@ -1,0 +1,14 @@
+.container {
+    margin: 25px;
+    padding: 15px;
+    /* background-color: rgb(238, 238, 238); */
+    border: 2px solid gold;
+    border-radius: 4px;
+}
+
+.title {
+    font-size: 2.5rem;
+    font-family: 'Lilita One', cursive;
+    font-weight: 400;
+    margin-bottom: 20px;
+}

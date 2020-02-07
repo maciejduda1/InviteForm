@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styles from "./Input.module.css";
 
-const Input = ({ label, field }) => {
+const Input = ({ label, ...field }) => {
 
   return (
     <div className={styles.inputContainer}>

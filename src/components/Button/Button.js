@@ -6,7 +6,7 @@ const Button = ({ value, type, ...props }) => <button className={styles.button} 
 
 
 Button.propTypes = {
-    value: PropTypes.string.isRequired,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
     type: PropTypes.string,
 }
 

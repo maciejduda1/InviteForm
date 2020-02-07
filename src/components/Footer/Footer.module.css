@@ -1,0 +1,12 @@
+
+.container {
+    width: 100%;
+    font-family: 'Montserrat';
+    font-weight: 600;
+    color: black;
+    /* background-color: rgb(35, 35, 212); */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+}

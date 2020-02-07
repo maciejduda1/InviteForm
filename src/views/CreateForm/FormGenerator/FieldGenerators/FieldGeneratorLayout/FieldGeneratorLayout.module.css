@@ -1,0 +1,12 @@
+.container {
+    display: grid;
+    grid-template-columns: 80% 20%;  
+    padding: 25px;
+}
+
+.component {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
