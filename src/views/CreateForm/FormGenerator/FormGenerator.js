@@ -1,78 +1,119 @@
 import React from "react";
-import styles from "./FormGenerator.module.css";
 import FieldGeneratorLayout from "./FieldGenerators/FieldGeneratorLayout/FieldGeneratorLayout";
-import Input from "../../../components/input/Input";
 import { Formik, Form, Field } from "formik";
-import TextArea from "../../../components/TextArea/TextArea";
 import PropTypes from "prop-types";
-import CheckboxSelect from "../../../components/CheckboxSelect/CheckboxSelect";
+import InputGenerator from "./FieldGenerators/InputGenerator.tsx/InputGenerator";
+import TextFieldGenerator from "./FieldGenerators/TextFieldGenerator";
+import Button from "../../../components/Button/Button";
+import CheckboxFieldGenerator from "./FieldGenerators/CheckboxFieldGenerator/CheckboxFieldGenerator";
 
-const FormGenerator = ({ formFields = [] }) => {
-  // const [form, setFormFields] = React.useState();
-  const initialValues = {
-    title: "",
-    fields: []
-  };
+const FormGenerator = ({ formFields = {}, deleteElement }) => {
 
-  return (
-    <div className={styles.container}>
-      <Formik initialValues={initialValues}>
-        {({
-          values,
-          errors,
-          touched,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          isSubmitting
-          /* and other goodies */
-        }) => (
-          <Form>
-            <FieldGeneratorLayout isDeletable={false}>
-              <Field label='Tytuł formularza' name='title' component={Input} />
-            </FieldGeneratorLayout>
-            <FieldGeneratorLayout>
-              <Field
-                label='Opis wydarzenia'
-                name='fields[0]'
-                component={TextArea}
-              />
-            </FieldGeneratorLayout>
-            <FieldGeneratorLayout isDeletable={false}>
-              <Field
-                label='Imię zaproszonego'
-                name='title'
-                disabled={true}
-                component={Input}
-              />
-            </FieldGeneratorLayout>
-            {formFields.map(field => (
-              <FieldGeneratorLayout key={field.name}>
-                {field.type === "text" && (
-                  <Field
-                    label={field.label}
-                    name={field.name}
-                    component={Input}
-                  />
-                )}
-                {field.type === "checkbox" && (
-                  <Field
-                    label={field.label}
-                    name={field.name}
-                    component={CheckboxSelect}
-                  />
-                )}
-              </FieldGeneratorLayout>
-            ))}
-          </Form>
-        )}
-      </Formik>
-    </div>
-  );
+    const initialValues = {
+        title: "",
+        description: '',
+        name: '',
+        fields: formFields,
+    };
+
+    function handleSubmit(values, actions) {
+        console.log(values)
+    }
+
+    return (
+        <>
+            <Formik
+                onSubmit={(values, actions) => handleSubmit(values, actions)}
+                initialValues={initialValues}
+            >
+                {({
+                    values,
+                    errors,
+                    touched,
+                    handleChange,
+                    handleBlur,
+                    handleSubmit,
+                    isSubmitting,
+                    setFieldValue
+                    /* and other goodies */
+                }) => (
+                        <Form>
+                            {console.log('VALUES ', values)}
+                            <FieldGeneratorLayout isDeletable={false} name="title" deleteElement={() => deleteElement('title')}>
+                                <Field defLabel='Tytuł formularza' name='title' component={InputGenerator} />
+                                <Field
+                                    defLabel='Opis wydarzenia'
+                                    name='description'
+                                    component={TextFieldGenerator}
+                                />
+                            </FieldGeneratorLayout>
+                            <FieldGeneratorLayout isDeletable={false} name="name" deleteElement={() => deleteElement('name')}>
+                                <Field
+                                    defLabel='Imię uczestnika'
+                                    name='name'
+                                    component={InputGenerator}
+                                />
+                            </FieldGeneratorLayout>
+                            {Object.keys(formFields).map(key => (
+                                <FieldGeneratorLayout key={key} name={key} deleteElement={() => deleteElement(key)}>
+                                    {formFields[key].type === "text" && (
+                                        <Field
+                                            name={formFields[key].name}
+                                        >
+                                            {({ field, form, meta }) => (
+                                                <InputGenerator
+                                                    advanced
+                                                    defLabel={formFields[key].label}
+                                                    onChange={(e) => setFieldValue(formFields[key].name, {
+                                                        ...formFields[key],
+                                                        label: e.target.value,
+                                                    })}
+                                                    field={field}
+                                                />
+                                            )}
+                                        </Field>
+                                    )}
+                                    {formFields[key].type === "checkbox" && (
+                                        <Field
+                                            name={formFields[key].name}
+                                        >
+                                            {({ field, form, meta }) => (
+                                                <CheckboxFieldGenerator
+                                                    checkboxFieldData={formFields[key]}
+                                                    onChange={(e) => setFieldValue(formFields[key].name, {
+                                                        ...formFields[key],
+                                                        ...values.fields[key],
+                                                        label: e.target.value,
+                                                    })}
+                                                    defLabel={formFields[key].label}
+                                                    field={field}
+                                                    form={form}
+                                                />
+                                            )}
+                                        </Field>
+                                    )}
+                                </FieldGeneratorLayout>
+                            ))}
+                            <div>
+                                <Button
+                                    disabled={isSubmitting}
+                                    value="Stwórz formularz"
+                                />
+                            </div>
+                        </Form>
+                    )}
+            </Formik>
+        </>
+    );
 };
 
 FormGenerator.propTypes = {
-  formFields: PropTypes.array.isRequired
+    formFields: PropTypes.shape({
+        fieldId: PropTypes.string,
+        type: PropTypes.string,
+        label: PropTypes.string,
+        name: PropTypes.string
+    })
 };
 
 export default FormGenerator;

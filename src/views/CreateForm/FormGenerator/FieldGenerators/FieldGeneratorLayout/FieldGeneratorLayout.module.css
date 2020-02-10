@@ -2,11 +2,17 @@
   display: grid;
   grid-template-columns: 80% 20%;
   padding: 25px;
+  font-size: 1.6rem;
+  color: black;
+  box-shadow: 0 1px 4px 1px rgb(12, 11, 11);
+  margin: 15px;
+  border-radius: 4px;
 }
 
 .component {
   width: 100%;
-  display: inline-flex;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }

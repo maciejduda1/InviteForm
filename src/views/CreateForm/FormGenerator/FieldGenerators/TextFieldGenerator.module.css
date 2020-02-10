@@ -1,0 +1,7 @@
+.component {
+    display: inline-flex;
+    height: 72px;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}

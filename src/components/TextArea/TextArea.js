@@ -2,7 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import styles from "../input/Input.module.css";
 
-const TextArea = ({ label, field, ...props }) => {
+const TextArea = ({ label, ...props }) => {
+    const { value, name } = props.field
 
     return (
         <div className={styles.inputContainer}>
@@ -11,10 +12,11 @@ const TextArea = ({ label, field, ...props }) => {
                 required
                 className={`${styles.Input} ${styles.TextArea}`}
                 autoComplete="username"
-                {...field}
                 {...props}
+                {...props.field}
+                value={value || ''}
             />
-            <label htmlFor={field.name} className={styles.Label}>
+            <label htmlFor={name} className={styles.Label}>
                 {label}
             </label>
         </div>
