@@ -29,7 +29,7 @@ const Answers = ({ match }) => {
                                 if (res.exists) {
                                     const data = res.data()
                                     setForm(data)
-                                    console.log("DATA ", data)
+                                    // console.log("DATA ", data)
                                     setGetDataStatus(true)
                                 }
                             }
@@ -77,12 +77,17 @@ const Answers = ({ match }) => {
                                                 <ul>
                                                     {form.fields[fieldKey].options.map((option, index) =>
                                                         <li key={index}>
-                                                            {option.label} {`${answersCollection[key].fields[fieldKey].answer[index]}`}
+                                                            {option.label}
+                                                            {answersCollection[key].fields[fieldKey].answer[index] &&
+                                                                <i className="fas fa-check-circle"></i>
+                                                            }
+                                                            {!answersCollection[key].fields[fieldKey].answer[index] &&
+                                                                <i className="fas fa-exclamation-circle"></i>
+                                                            }
                                                         </li>
                                                     )}
                                                 </ul>
                                             </>
-
                                         }
                                     </React.Fragment>
                                 )}
