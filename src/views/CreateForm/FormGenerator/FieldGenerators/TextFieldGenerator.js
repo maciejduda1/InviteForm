@@ -9,7 +9,6 @@ const TextFieldGenerator = ({ defLabel, ...props }) => {
 
     const { value } = props.field
 
-    console.log(props)
     return (
         <>
             {!editMode &&

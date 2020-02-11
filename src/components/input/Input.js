@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import styles from "./Input.module.css";
 
 const Input = ({ label, value, name, ...props }) => {
-	// console.log('VAL  ', value)
+
 	return (
 		<div className={styles.inputContainer}>
 			<input

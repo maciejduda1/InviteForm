@@ -7,6 +7,9 @@ import TextFieldGenerator from "./FieldGenerators/TextFieldGenerator";
 import Button from "../../../components/Button/Button";
 import CheckboxFieldGenerator from "./FieldGenerators/CheckboxFieldGenerator/CheckboxFieldGenerator";
 
+import * as firebase from 'firebase/app';
+import 'firebase/firestore';
+
 const FormGenerator = ({ formFields = {}, deleteElement }) => {
 
     const initialValues = {
@@ -17,7 +20,12 @@ const FormGenerator = ({ formFields = {}, deleteElement }) => {
     };
 
     function handleSubmit(values, actions) {
-        console.log(values)
+        const db = firebase.firestore();
+        db.collection("forms").add(values)
+            .then(res => console.log('dodałem dane pod id: ', res.id))
+            .catch(error => {
+                console.log('Nie udało się')
+            })
     }
 
     return (
@@ -38,7 +46,6 @@ const FormGenerator = ({ formFields = {}, deleteElement }) => {
                     /* and other goodies */
                 }) => (
                         <Form>
-                            {console.log('VALUES ', values)}
                             <FieldGeneratorLayout isDeletable={false} name="title" deleteElement={() => deleteElement('title')}>
                                 <Field defLabel='Tytuł formularza' name='title' component={InputGenerator} />
                                 <Field
