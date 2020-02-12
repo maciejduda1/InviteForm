@@ -6,11 +6,13 @@ import InputGenerator from "./FieldGenerators/InputGenerator.tsx/InputGenerator"
 import TextFieldGenerator from "./FieldGenerators/TextFieldGenerator";
 import Button from "../../../components/Button/Button";
 import CheckboxFieldGenerator from "./FieldGenerators/CheckboxFieldGenerator/CheckboxFieldGenerator";
+import styles from './FormGenerator.module.css'
+import { withRouter } from 'react-router-dom';
 
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 
-const FormGenerator = ({ formFields = {}, deleteElement }) => {
+const FormGenerator = ({ formFields = {}, deleteElement, history, match }) => {
 
     const initialValues = {
         title: "",
@@ -22,7 +24,7 @@ const FormGenerator = ({ formFields = {}, deleteElement }) => {
     function handleSubmit(values, actions) {
         const db = firebase.firestore();
         db.collection("forms").add(values)
-            .then(res => console.log('dodałem dane pod id: ', res.id))
+            .then(res => history.push(`./${res.id}`))
             .catch(error => {
                 console.log('Nie udało się')
             })
@@ -45,69 +47,75 @@ const FormGenerator = ({ formFields = {}, deleteElement }) => {
                     setFieldValue
                     /* and other goodies */
                 }) => (
-                        <Form>
-                            <FieldGeneratorLayout isDeletable={false} name="title" deleteElement={() => deleteElement('title')}>
-                                <Field defLabel='Tytuł formularza' name='title' component={InputGenerator} />
-                                <Field
-                                    defLabel='Opis wydarzenia'
-                                    name='description'
-                                    component={TextFieldGenerator}
-                                />
-                            </FieldGeneratorLayout>
-                            <FieldGeneratorLayout isDeletable={false} name="name" deleteElement={() => deleteElement('name')}>
-                                <Field
-                                    defLabel='Imię uczestnika'
-                                    name='name'
-                                    component={InputGenerator}
-                                />
-                            </FieldGeneratorLayout>
-                            {Object.keys(formFields).map(key => (
-                                <FieldGeneratorLayout key={key} name={key} deleteElement={() => deleteElement(key)}>
-                                    {formFields[key].type === "text" && (
+                        <div>
+                            <div className={styles.container}>
+                                <Form>
+                                    <FieldGeneratorLayout isDeletable={false} name="title" deleteElement={() => deleteElement('title')}>
+                                        <Field defLabel='Tytuł formularza' name='title' component={InputGenerator} />
+                                        <div className={styles.descriptionContainer}>
+                                            <Field
+                                                defLabel='Opis wydarzenia'
+                                                name='description'
+                                                component={TextFieldGenerator}
+                                            />
+                                        </div>
+                                    </FieldGeneratorLayout>
+                                    <FieldGeneratorLayout isDeletable={false} name="name" deleteElement={() => deleteElement('name')}>
                                         <Field
-                                            name={formFields[key].name}
-                                        >
-                                            {({ field, form, meta }) => (
-                                                <InputGenerator
-                                                    advanced
-                                                    defLabel={formFields[key].label}
-                                                    onChange={(e) => setFieldValue(formFields[key].name, {
-                                                        ...formFields[key],
-                                                        label: e.target.value,
-                                                    })}
-                                                    field={field}
-                                                />
+                                            defLabel='Imię uczestnika'
+                                            name='name'
+                                            component={InputGenerator}
+                                        />
+                                    </FieldGeneratorLayout>
+                                    {Object.keys(formFields).map(key => (
+                                        <FieldGeneratorLayout key={key} name={key} deleteElement={() => deleteElement(key)}>
+                                            {formFields[key].type === "text" && (
+                                                <Field
+                                                    name={formFields[key].name}
+                                                >
+                                                    {({ field, form, meta }) => (
+                                                        <InputGenerator
+                                                            advanced
+                                                            defLabel={formFields[key].label}
+                                                            onChange={(e) => setFieldValue(formFields[key].name, {
+                                                                ...formFields[key],
+                                                                label: e.target.value,
+                                                            })}
+                                                            field={field}
+                                                        />
+                                                    )}
+                                                </Field>
                                             )}
-                                        </Field>
-                                    )}
-                                    {formFields[key].type === "checkbox" && (
-                                        <Field
-                                            name={formFields[key].name}
-                                        >
-                                            {({ field, form, meta }) => (
-                                                <CheckboxFieldGenerator
-                                                    checkboxFieldData={formFields[key]}
-                                                    onChange={(e) => setFieldValue(formFields[key].name, {
-                                                        ...formFields[key],
-                                                        ...values.fields[key],
-                                                        label: e.target.value,
-                                                    })}
-                                                    defLabel={formFields[key].label}
-                                                    field={field}
-                                                    form={form}
-                                                />
+                                            {formFields[key].type === "checkbox" && (
+                                                <Field
+                                                    name={formFields[key].name}
+                                                >
+                                                    {({ field, form, meta }) => (
+                                                        <CheckboxFieldGenerator
+                                                            checkboxFieldData={formFields[key]}
+                                                            onChange={(e) => setFieldValue(formFields[key].name, {
+                                                                ...formFields[key],
+                                                                ...values.fields[key],
+                                                                label: e.target.value,
+                                                            })}
+                                                            defLabel={formFields[key].label}
+                                                            field={field}
+                                                            form={form}
+                                                        />
+                                                    )}
+                                                </Field>
                                             )}
-                                        </Field>
-                                    )}
-                                </FieldGeneratorLayout>
-                            ))}
-                            <div>
-                                <Button
-                                    disabled={isSubmitting}
-                                    value="Stwórz formularz"
-                                />
+                                        </FieldGeneratorLayout>
+                                    ))}
+                                    <div>
+                                        <Button
+                                            disabled={isSubmitting}
+                                            value="Stwórz formularz"
+                                        />
+                                    </div>
+                                </Form>
                             </div>
-                        </Form>
+                        </div>
                     )}
             </Formik>
         </>
@@ -123,4 +131,4 @@ FormGenerator.propTypes = {
     })
 };
 
-export default FormGenerator;
+export default withRouter(FormGenerator);

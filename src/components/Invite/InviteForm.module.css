@@ -1,19 +1,30 @@
 .formContainer {
+    margin-top: 25px;
     width: 100%;
     display: flex;
     justify-content: center;
 }
 
 .formContent {
+    font-size: 1.6rem;
     border-radius: 4px;
     padding: 25px; 
-    width: 340px;
     min-height: 500px;
-    background-color: #413D3C;
-    color: white;
+    color: #21243d;
+    max-width: 1200px;
+    width: 100%;
 }
 
 .checkboxes {
+    margin: 8.5px 0;
     display: flex;
     flex-direction: column;
+    border: 4px solid #ff7c7c;
+}
+
+.titleDescriptionContainer {
+    text-align: center;
+}
+.titleDescriptionContainer h1, .titleDescriptionContainer h2 {
+    margin-bottom: 10px;
 }

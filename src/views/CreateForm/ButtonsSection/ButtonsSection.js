@@ -15,17 +15,23 @@ const ButtonsSection = ({ sendSelectedField }) => {
 
 
     return (
-        <div className={styles.container}>
-            <h2 className={styles.title}>Dodaj pole: </h2>
-            <Select
-                value={selectedOption}
-                options={optionForSelect}
-                onChange={(e) => setSelectedOption(e.target.value)}
-            />
-            <Button
-                onClick={() => sendSelectedField(selectedOption)}
-                value="Dodaj Pole"
-            />
+        <div>
+            <div className={styles.container}>
+                <h2 className={styles.title}>Dodaj pole: </h2>
+                <div className={styles.itemContainer}>
+                    <Select
+                        value={selectedOption}
+                        options={optionForSelect}
+                        onChange={(e) => setSelectedOption(e.target.value)}
+                    />
+                </div>
+                <div className={styles.itemContainer}>
+                    <Button
+                        onClick={() => sendSelectedField(selectedOption)}
+                        value="Dodaj Pole"
+                    />
+                </div>
+            </div>
         </div>
     );
 }

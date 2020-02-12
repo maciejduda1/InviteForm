@@ -1,0 +1,53 @@
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    align-items: flex-start;
+}
+.fieldText:hover, .listOptionText:hover {
+    cursor: pointer;
+    color: #676988;
+}
+.fieldText {
+    height: 72px;
+    line-height: 72px;
+}
+
+.list {
+    width: 100%;
+    font-size: 1.4rem;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.listItem {
+    height: 72px;
+    display: inline-flex;
+    align-items: center;
+    border-bottom: 1px dotted #ff7c7c;
+    width: 100%;
+}
+
+.listOptionText {
+    margin: 0 auto 0 0;
+}
+
+.inputsOptionsContainer {
+    width: 90%;
+    margin-left: 25px;
+}
+
+.inputOption {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.buttonContainer {
+    margin: 0 5px;
+}

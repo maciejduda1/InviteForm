@@ -1,12 +1,14 @@
 .container {
   display: grid;
-  grid-template-columns: 80% 20%;
+  grid-template-columns: 4fr 1fr;
   padding: 25px;
   font-size: 1.6rem;
-  color: black;
-  box-shadow: 0 1px 4px 1px rgb(12, 11, 11);
-  margin: 15px;
+  color: #21243d;
+  border: 3px solid #ff7c7c;
+  /* box-shadow: 0 1px 4px 1px #ff7c7c; */
+  margin-bottom: 15px;
   border-radius: 4px;
+  position: relative;
 }
 
 .component {
@@ -18,7 +20,7 @@
 }
 
 .buttonContainer {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  position: absolute;
+  right: -12px;
+  top: -12px;
 }

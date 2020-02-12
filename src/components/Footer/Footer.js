@@ -3,7 +3,7 @@ import styles from './Footer.module.css';
 
 const Footer = () =>
     <div className={styles.container}>
-        Page by Maciej Duda
+        App by Maciej Duda @2020 v. 0.1 (alfa)
     </div>
 
 export default Footer;

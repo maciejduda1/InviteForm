@@ -9,9 +9,9 @@ import Button from "../Button/Button";
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 
-import { withRouter, Redirect } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
-const InviteForm = ({ match }) => {
+const InviteForm = ({ match, history }) => {
 
 	const [databaseForm, setForm] = React.useState();
 
@@ -28,12 +28,12 @@ const InviteForm = ({ match }) => {
 					setForm(data)
 					return setGettingData(false)
 				}
-				return !res.exists && <Redirect to="/" />
+				return !res.exists && history.push('/')
 			})
 			.catch(error =>
 				console.log('error: ', error)
 			)
-	}, [match])
+	}, [match, history])
 
 	const initialValues = {
 		name: '',
@@ -64,13 +64,12 @@ const InviteForm = ({ match }) => {
 	}
 
 	function handleSubmit(values, actions) {
-		console.log('VAL ', values)
 		if (values.name) {
 			const db = firebase.firestore();
 			const docId = match.params.id;
 			const dbRef = db.collection("forms").doc(docId).collection("answers").doc(values.name)
 			dbRef.set(values)
-				.then(res => console.log('dodałem dane i res: ', res))
+				.then(res => history.push(`${match.url}/answers`))
 				.catch(error => {
 					console.log('Nie udało się')
 					actions.setSubmitting(false)
@@ -92,8 +91,10 @@ const InviteForm = ({ match }) => {
 							initialValues={getInitialValues()}
 							render={({ values, errors, touched, isSubmitting }) => (
 								<Form>
-									<h1>{databaseForm.title}</h1>
-									<p>{databaseForm.description}</p>
+									<div className={styles.titleDescriptionContainer}>
+										<h1>{databaseForm.title || 'Brak tytułu'}</h1>
+										<p>{databaseForm.description || 'Brak opisu'}</p>
+									</div>
 									<Field
 										name="name"
 										label={databaseForm.name || "Imię i nazwisko wypełniającego"}
@@ -104,7 +105,7 @@ const InviteForm = ({ match }) => {
 											{databaseForm.fields[key].type === 'checkbox' &&
 												<div className={styles.checkboxes}>
 													<h2>{databaseForm.fields[key].label}</h2>
-													<h5>Zaznacz wszystkie pasujące!</h5>
+													<h5>Zaznacz wszystkie pasujące odpowiedzi!</h5>
 													{databaseForm.fields[key].options.map((option, index) =>
 														<Field
 															key={index}
@@ -123,8 +124,6 @@ const InviteForm = ({ match }) => {
 													component={TextArea} />
 											}
 										</React.Fragment>
-
-
 									)}
 									<Button
 										disabled={isSubmitting}

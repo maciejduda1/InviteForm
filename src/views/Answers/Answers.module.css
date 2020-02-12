@@ -1,3 +1,37 @@
 .container {
     font-size: 1.6rem;
 }
+
+.list {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.listItem i {
+    margin-left: auto;
+}
+
+.listItem {
+    padding: 0 30px;
+    display: inline-flex;
+    width: 100%;
+    align-items: center;
+    margin: 20px 0;
+    border-bottom: 1px dotted #ff7c7c;
+}
+
+.title {
+    margin: 20px 0;
+}
+
+.textField {
+    border: 4px solid #ff7c7c;
+    margin: 20px 0;
+    padding: 15px;
+}
+
+.userName {
+    color: #88e1f2;
+}

@@ -26,7 +26,6 @@ const Input = ({ label, value, name, ...props }) => {
 
 Input.propTypes = {
 	label: PropTypes.string,
-	field: PropTypes.any.isRequired,
 	value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired
 };
 

@@ -1,7 +1,11 @@
+.selectContainer {
+    position: relative;
+}
+
 .select {
     height: 55px;
     width: calc(100% - 15px);
-    border: 4px solid #1e555c;
+    border: 4px solid #ff7c7c;
     background: transparent;
     z-index: 2;
     padding-left: 15px;
@@ -14,6 +18,7 @@
     letter-spacing: 1.5px;
     word-spacing: 5px;
     white-space: nowrap; 
+    cursor: pointer;
 }
 
 .option {
@@ -23,4 +28,18 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap; 
+}
+
+.menu {
+    position: absolute;
+    
+    top: 55px;
+}
+
+.show{
+    display: block;
+}
+
+.hide {
+    display: none;
 }

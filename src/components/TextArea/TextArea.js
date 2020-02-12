@@ -8,6 +8,8 @@ const TextArea = ({ label, ...props }) => {
     return (
         <div className={styles.inputContainer}>
             <textarea
+                cols="20"
+                wrap="hard"
                 type="text"
                 required
                 className={`${styles.Input} ${styles.TextArea}`}

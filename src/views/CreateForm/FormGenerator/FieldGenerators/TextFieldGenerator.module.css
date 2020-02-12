@@ -3,5 +3,10 @@
     height: 72px;
     align-items: center;
     text-align: center;
-    width: 100%;
+    /* width: 100%; */
+}
+
+.component:hover {
+    cursor: pointer;
+    color: #676988;
 }
