@@ -9,7 +9,7 @@ import Button from "../Button/Button";
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 
 const InviteForm = ({ match, history }) => {
 
@@ -91,6 +91,12 @@ const InviteForm = ({ match, history }) => {
 							initialValues={getInitialValues()}
 							render={({ values, errors, touched, isSubmitting }) => (
 								<Form>
+									<div className={styles.linkArea}>
+										<h3>Zapisz linki aby mieć dostęp do formularzy!</h3>
+										<h4 className={styles.linkTitle}>Link do wygenerowanego formularza: <Link className={styles.link} to={match.url}>{match.url}</Link> </h4>
+										<h4 className={styles.linkTitle}>Link do udzielonych odpowiedzi: <Link className={styles.link} to={`${match.url}/answers`}>{`${match.url}/answers`}</Link> </h4>
+										<p></p>
+									</div>
 									<div className={styles.titleDescriptionContainer}>
 										<h1>{databaseForm.title || 'Brak tytułu'}</h1>
 										<p>{databaseForm.description || 'Brak opisu'}</p>

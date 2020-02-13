@@ -28,3 +28,17 @@
 .titleDescriptionContainer h1, .titleDescriptionContainer h2 {
     margin-bottom: 10px;
 }
+
+.linkArea {
+    border: 4px solid #ff7c7c;
+    margin: 25px 0;
+    padding: 25px 5px;
+}
+
+.linkTitle {
+    margin: 10px 0
+}
+.link {
+    text-decoration: none;
+    color: #88e1f2;
+}
