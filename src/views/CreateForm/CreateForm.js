@@ -20,15 +20,17 @@ const CreateForm = () => {
 			}
 		}
 
-		let optionFiled = {
-			fieldId: fieldId,
-			name: `fields.${fieldId}`,
-			label: "",
-		}
+		let optionField = (id = uuid()) => ({
+			[id]: {
+				fieldId: id,
+				name: `fields.${fieldId}`,
+				label: "",
+			}
+		})
 
-		if (selectedOption === 'checkbox') newField[fieldId].options = [
-			optionFiled, optionFiled, optionFiled
-		]
+		if (selectedOption === 'checkbox') newField[fieldId].options = {
+			...optionField(), ...optionField(), ...optionField()
+		}
 
 		setNewCreatedField(
 			newField
@@ -48,10 +50,26 @@ const CreateForm = () => {
 		})
 	}
 
+	const deleteOption = (idfOfField, idOfFieldOption) => {
+		const newFields = Object.keys(createdFields[idfOfField].options).reduce((object, key) => {
+			if (key !== idOfFieldOption) {
+				object[key] = createdFields[idfOfField].options[key]
+			}
+			return object
+		}, {})
+
+		setNewCreatedField({
+			...createdFields, [idfOfField]: {
+				...createdFields[idfOfField], options: newFields
+			}
+		})
+	}
+
 	return (
 		<div className={styles.container}>
 			<ButtonsSection sendSelectedField={sendSelectedField} />
 			<FormGenerator
+				deleteOption={deleteOption}
 				deleteElement={deleteField}
 				formFields={createdFields} />
 		</div>

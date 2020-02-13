@@ -49,7 +49,7 @@ const InviteForm = ({ match, history }) => {
 						...fields,
 						[key]: {
 							type: databaseForm.fields[key].type,
-							answer: databaseForm.fields[key].type === 'checkbox' ? databaseForm.fields[key].options.map(opt => false) : '',
+							answer: databaseForm.fields[key].type === 'checkbox' ? Object.keys(databaseForm.fields[key].options).map(opt => false) : '',
 						}
 					})
 			);
@@ -112,11 +112,11 @@ const InviteForm = ({ match, history }) => {
 												<div className={styles.checkboxes}>
 													<h2>{databaseForm.fields[key].label}</h2>
 													<h5>Zaznacz wszystkie pasujące odpowiedzi!</h5>
-													{databaseForm.fields[key].options.map((option, index) =>
+													{Object.keys(databaseForm.fields[key].options).map((optionKey, index) =>
 														<Field
-															key={index}
-															name={`${option.name}.answer[${index}]`}
-															label={option.label}
+															key={optionKey}
+															name={`${databaseForm.fields[key].name}.answer[${index}]`}
+															label={databaseForm.fields[key].options[optionKey].label}
 															component={CheckboxSelect} />
 													)}
 												</div>

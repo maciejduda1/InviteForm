@@ -12,9 +12,9 @@ import { withRouter } from 'react-router-dom';
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 
-const FormGenerator = ({ formFields = {}, deleteElement, history, match }) => {
+const FormGenerator = ({ formFields = {}, deleteElement, deleteOption, history, match }) => {
 
-    const initialValues = {
+    let initialValues = {
         title: "",
         description: '',
         name: '',
@@ -92,6 +92,7 @@ const FormGenerator = ({ formFields = {}, deleteElement, history, match }) => {
                                                 >
                                                     {({ field, form, meta }) => (
                                                         <CheckboxFieldGenerator
+                                                            deleteOption={deleteOption}
                                                             checkboxFieldData={formFields[key]}
                                                             onChange={(e) => setFieldValue(formFields[key].name, {
                                                                 ...formFields[key],
