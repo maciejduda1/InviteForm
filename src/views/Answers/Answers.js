@@ -5,7 +5,7 @@ import 'firebase/firestore';
 
 import { withRouter, Redirect } from 'react-router-dom'
 
-import styles from '../../components/Invite/InviteForm.module.css';
+import styles from '../Form/Form.module.css';
 import localStyles from './Answers.module.css';
 
 const Answers = ({ match }) => {
