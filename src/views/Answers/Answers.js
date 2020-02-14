@@ -76,9 +76,9 @@ const Answers = ({ match }) => {
                                                     {form.fields[fieldKey].label}
                                                 </h3>
                                                 <ul className={localStyles.list}>
-                                                    {Object.keys(form.fields[fieldKey].options).map((optionKey, index) =>
+                                                    {form.fields[fieldKey].options.map((option, index) =>
                                                         <li key={index} className={localStyles.listItem}>
-                                                            <span>{form.fields[fieldKey].options[optionKey].label}</span>
+                                                            <span>{option.label}</span>
                                                             {answersCollection[key].fields[fieldKey].answer[index] &&
                                                                 <i style={{ color: 'green' }} className="fas fa-check-circle"></i>
                                                             }

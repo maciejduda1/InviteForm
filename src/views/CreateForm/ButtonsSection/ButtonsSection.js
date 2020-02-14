@@ -27,6 +27,7 @@ const ButtonsSection = ({ sendSelectedField }) => {
                 </div>
                 <div className={styles.itemContainer}>
                     <Button
+                        type="button"
                         onClick={() => sendSelectedField(selectedOption)}
                         value="Dodaj Pole"
                     />

@@ -1,7 +1,6 @@
 import React from "react";
 import "./App.css";
 import Layout from "./views/Layout/Layout";
-import CreateForm from "./views/CreateForm/CreateForm";
 import firebaseConfig from "./firebase/firebaseConfig";
 import * as firebase from 'firebase/app';
 import {
@@ -10,8 +9,9 @@ import {
   Route,
   Redirect
 } from "react-router-dom";
-import InviteForm from "./components/Invite/InviteForm";
+import Form from "./views/Form/Form";
 import Answers from "./views/Answers/Answers";
+import FormGenerator from "./views/CreateForm/FormGenerator/FormGenerator";
 
 const App = () => {
 
@@ -35,10 +35,10 @@ const App = () => {
                 <Redirect to='/create' />
               </Route>
               <Route path='/create' exact>
-                <CreateForm />
+                <FormGenerator />
               </Route>
               <Route path='/:id' exact>
-                <InviteForm />
+                <Form />
               </Route>
               <Route path='/:id/answers' exact>
                 <Answers />

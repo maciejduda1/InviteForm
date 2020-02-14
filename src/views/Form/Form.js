@@ -1,10 +1,10 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
-import Input from "../input/Input";
-import styles from './InviteForm.module.css';
-import CheckboxSelect from '../CheckboxSelect/CheckboxSelect';
-import TextArea from "../TextArea/TextArea";
-import Button from "../Button/Button";
+import Input from "../../components/input/Input";
+import styles from './Form.module.css';
+import CheckboxSelect from '../../components/CheckboxSelect/CheckboxSelect';
+import TextArea from "../../components/TextArea/TextArea";
+import Button from "../../components/Button/Button";
 
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
@@ -49,7 +49,7 @@ const InviteForm = ({ match, history }) => {
 						...fields,
 						[key]: {
 							type: databaseForm.fields[key].type,
-							answer: databaseForm.fields[key].type === 'checkbox' ? Object.keys(databaseForm.fields[key].options).map(opt => false) : '',
+							answer: databaseForm.fields[key].type === 'checkbox' ? databaseForm.fields[key].options.map(opt => false) : '',
 						}
 					})
 			);
@@ -106,27 +106,27 @@ const InviteForm = ({ match, history }) => {
 										label={databaseForm.name || "Imię i nazwisko wypełniającego"}
 										value={values.name}
 										component={Input} />
-									{Object.keys(databaseForm.fields).map(key =>
-										<React.Fragment key={key}>
-											{databaseForm.fields[key].type === 'checkbox' &&
+									{databaseForm.fields.map((field, index) =>
+										<React.Fragment key={index}>
+											{field.type === 'checkbox' &&
 												<div className={styles.checkboxes}>
-													<h2>{databaseForm.fields[key].label}</h2>
+													<h2>{field.label}</h2>
 													<h5>Zaznacz wszystkie pasujące odpowiedzi!</h5>
-													{Object.keys(databaseForm.fields[key].options).map((optionKey, index) =>
+													{field.options.map((option, ind) =>
 														<Field
-															key={optionKey}
-															name={`${databaseForm.fields[key].name}.answer[${index}]`}
-															label={databaseForm.fields[key].options[optionKey].label}
+															key={ind}
+															name={`fields.${index}.answer[${ind}]`}
+															label={option.label}
 															component={CheckboxSelect} />
 													)}
 												</div>
 											}
-											{databaseForm.fields[key].type === 'text' &&
+											{field.type === 'text' &&
 												<Field
 													rows={5}
 													cols={50}
-													name={`fields[${key}].answer`}
-													label={databaseForm.fields[key].label}
+													name={`fields[${index}].answer`}
+													label={field.label}
 													component={TextArea} />
 											}
 										</React.Fragment>

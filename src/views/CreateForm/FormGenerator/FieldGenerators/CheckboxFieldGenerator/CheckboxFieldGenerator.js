@@ -3,36 +3,35 @@ import OutsideClickHandler from 'react-outside-click-handler';
 import Input from '../../../../../components/input/Input';
 import Button from '../../../../../components/Button/Button';
 import styles from './CheckboxFieldGenerator.module.css';
+import { FieldArray, Field } from 'formik';
 
-const CheckboxFieldGenerator = ({ defLabel, checkboxFieldData, deleteOption, form, ...props }) => {
+const CheckboxFieldGenerator = ({ defLabel, field }) => {
     const [editMode, setEditMode] = React.useState(false);
 
     return (
         <>
             {!editMode &&
+
                 <div className={styles.container}>
                     <h2 className={styles.fieldText} onClick={() => setEditMode(true)}>
-                        {(props.field.value && props.field.value.label) || 'Zaznacz pasujące odpowiedzi'}
+                        {(field.value.label) || 'Zaznacz pasujące odpowiedzi'}
                     </h2>
                     <ul className={styles.list}>
-                        {Object.keys(checkboxFieldData.options).map((optionKey, index) =>
-                            <li key={optionKey} className={styles.listItem}>
-                                <span onClick={() => setEditMode(true)} className={styles.listOptionText}>{(props.field.value && props.field.value.options && props.field.value.options[optionKey] && props.field.value.options[optionKey].label) || `Opcja-${index + 1}`}</span>
-                                {checkboxFieldData && checkboxFieldData.options && Object.keys(checkboxFieldData.options).length > 1 &&
+                        {field.value.options.map((option, index) =>
+                            <li key={index} className={styles.listItem}>
+                                <span onClick={() => setEditMode(true)} className={styles.listOptionText}> {option.label || `Opcja-${index + 1}`}</span>
+                                {/* {checkboxFieldData && checkboxFieldData.options && checkboxFieldData.options.length > 1 &&
                                     <Button
                                         onClick={() => {
-                                            deleteOption(checkboxFieldData.fieldId, optionKey)
-                                            // const fName = `${checkboxFieldData.name}`
-                                            // console.log('checkboxFieldData ', checkboxFieldData)
-                                            // console.log('FORM ', form.values)
-                                            // if (form.values.fields[checkboxFieldData.fieldId])
-                                            //     form.setFieldValue(fName, { ...form.values.fields[checkboxFieldData.fieldId], options: Object.keys(form.values.fields[checkboxFieldData.fieldId].options).filter(key => key !== optionKey && form.values.fields[checkboxFieldData.fieldId].options[key]) })
+                                            const fName = `${option.name}.options[${index}]`
+                                            form.setFieldValue(fName, { ...option, label: '' })
+                                            checkboxFieldData.options.splice(index, 1)
                                         }}
                                         size='small'
                                         shape='circle'
                                         value={<i className='fas fa-trash-alt'></i>}
                                     />
-                                }
+                                } */}
                             </li>
                         )}
                     </ul>
@@ -41,37 +40,41 @@ const CheckboxFieldGenerator = ({ defLabel, checkboxFieldData, deleteOption, for
             {
                 editMode &&
                 <OutsideClickHandler display="contents" onOutsideClick={() => setEditMode(false)}>
-                    <Input
-                        label={defLabel || 'Pytanie'}
-                        value={(props.field.value && props.field.value.label) || ''}
-                        {...props}
+                    <Field
+                        label="Pytanie do ankiety"
+                        component={Input}
+                        name={`${field.name}.label`}
+                        value={field.value.label}
                     />
                     <div className={styles.inputsOptionsContainer}>
-                        {Object.keys(checkboxFieldData.options).map((optionKey, index) =>
-                            <div className={styles.inputOption} key={optionKey}>
-                                <Input
-                                    name={`${checkboxFieldData.name}.options[${optionKey}]`}
-                                    label={`Odpowiedź ${index + 1}`}
-                                    value={(props.field.value && props.field.value.options && props.field.value.options[optionKey] && props.field.value.options[optionKey].label) || ''}
-                                    onChange={(e) => {
-                                        const fName = `${checkboxFieldData.name}.options[${optionKey}]`
-                                        form.setFieldValue(fName, { ...checkboxFieldData[optionKey], label: e.target.value })
-                                    }}
-                                />
-                                <div className={styles.buttonContainer}>
-                                    {checkboxFieldData && checkboxFieldData.options && Object.keys(checkboxFieldData.options).length > 1 &&
-                                        <Button
-                                            onClick={() => {
-                                                deleteOption(checkboxFieldData.fieldId, optionKey)
-                                            }}
-                                            size='small'
-                                            shape='circle'
-                                            value={<i className='fas fa-trash-alt'></i>}
-                                        />
-                                    }
-                                </div>
-                            </div>
-                        )}
+                        <FieldArray
+                            name={`${field.name}.options`}
+                            render={arrayHelpers => (
+                                <>
+                                    {field.value.options.map((option, index) =>
+                                        <div className={styles.inputOption} key={index}>
+                                            <Field
+                                                label={`Odpowiedź do wyboru`}
+                                                name={`${field.name}.options[${index}].label`}
+                                                value={field.value.options[index].label}
+                                                component={Input}
+                                            />
+                                            <div className={styles.buttonContainer}>
+                                                {field.value && field.value.options && field.value.options.length > 1 &&
+                                                    <Button
+                                                        type="button"
+                                                        onClick={() => arrayHelpers.remove(index)}
+                                                        size='small'
+                                                        shape='circle'
+                                                        value={<i className='fas fa-trash-alt'></i>}
+                                                    />
+                                                }
+                                            </div>
+                                        </div>
+                                    )}
+                                </>
+                            )}
+                        />
                     </div>
                 </OutsideClickHandler>
             }

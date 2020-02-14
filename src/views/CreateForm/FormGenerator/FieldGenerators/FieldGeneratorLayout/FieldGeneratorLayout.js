@@ -3,14 +3,15 @@ import Button from "../../../../../components/Button/Button";
 import styles from "./FieldGeneratorLayout.module.css";
 import PropTypes from "prop-types";
 
-const FieldGeneratorLayout = ({ children, isDeletable, name, deleteElement }) => (
+const FieldGeneratorLayout = ({ children, isDeletable, deleteElement }) => (
   <div>
     <div className={styles.container}>
       <div className={styles.component}>{children}</div>
       {isDeletable && (
         <div className={styles.buttonContainer}>
           <Button
-            onClick={() => deleteElement(name)}
+            type="button"
+            onClick={() => deleteElement()}
             size='small'
             shape='circle'
             value={<i className="fas fa-times"></i>}
@@ -23,7 +24,6 @@ const FieldGeneratorLayout = ({ children, isDeletable, name, deleteElement }) =>
 
 FieldGeneratorLayout.propTypes = {
   isDeletable: PropTypes.bool,
-  name: PropTypes.string.isRequired,
   deleteElement: PropTypes.func.isRequired
 };
 

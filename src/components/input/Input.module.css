@@ -52,4 +52,5 @@
   padding: 15px;
   font-size: 1.4rem;
   height: 120px;
+  text-overflow: auto;
 }
