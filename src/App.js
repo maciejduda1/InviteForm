@@ -3,6 +3,10 @@ import "./App.css";
 import Layout from "./views/Layout/Layout";
 import firebaseConfig from "./firebase/firebaseConfig";
 import * as firebase from 'firebase/app';
+import "firebase/auth";
+import 'firebase/firestore';
+
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -12,6 +16,7 @@ import {
 import Form from "./views/Form/Form";
 import Answers from "./views/Answers/Answers";
 import FormGenerator from "./views/CreateForm/FormGenerator/FormGenerator";
+import LoginScreen from './views/LoginScreen/LoginScreen';
 
 const App = () => {
 
@@ -32,7 +37,7 @@ const App = () => {
           <Layout>
             <Switch>
               <Route path='/' exact>
-                <Redirect to='/create' />
+                <LoginScreen />
               </Route>
               <Route path='/create' exact>
                 <FormGenerator />
