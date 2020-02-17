@@ -5,13 +5,15 @@ import styles from './Form.module.css';
 import CheckboxSelect from '../../components/CheckboxSelect/CheckboxSelect';
 import TextArea from "../../components/TextArea/TextArea";
 import Button from "../../components/Button/Button";
+import PropTypes from "prop-types";
 
 import * as firebase from 'firebase/app';
+import "firebase/auth";
 import 'firebase/firestore';
 
 import { withRouter, Link } from 'react-router-dom'
 
-const InviteForm = ({ match, history }) => {
+const InviteForm = ({ match, history, user }) => {
 
 	const [databaseForm, setForm] = React.useState();
 
@@ -21,7 +23,7 @@ const InviteForm = ({ match, history }) => {
 		setGettingData(true)
 		const docId = match.params.id
 		const db = firebase.firestore();
-		db.collection("forms").doc(docId).get()
+		db.collection(user.uid).doc(docId).get()
 			.then(res => {
 				if (res.exists) {
 					const data = res.data()
@@ -33,7 +35,7 @@ const InviteForm = ({ match, history }) => {
 			.catch(error =>
 				console.log('error: ', error)
 			)
-	}, [match, history])
+	}, [match, history, user.uid])
 
 	const initialValues = {
 		name: '',
@@ -67,11 +69,11 @@ const InviteForm = ({ match, history }) => {
 		if (values.name) {
 			const db = firebase.firestore();
 			const docId = match.params.id;
-			const dbRef = db.collection("forms").doc(docId).collection("answers").doc(values.name)
+			const dbRef = db.collection(user.uid).doc(docId).collection("answers").doc(values.name)
 			dbRef.set(values)
 				.then(res => history.push(`${match.url}/answers`))
 				.catch(error => {
-					console.log('Nie udało się')
+					console.log('Nie udało się ', error)
 					actions.setSubmitting(false)
 				})
 		}
@@ -144,6 +146,15 @@ const InviteForm = ({ match, history }) => {
 		</>
 
 	);
+};
+
+InviteForm.propTypes = {
+	user: PropTypes.shape({
+		name: PropTypes.string,
+		photo: PropTypes.string,
+		uid: PropTypes.string,
+		email: PropTypes.string,
+	}).isRequired
 };
 
 export default withRouter(InviteForm);

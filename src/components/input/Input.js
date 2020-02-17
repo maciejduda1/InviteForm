@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styles from "./Input.module.css";
 
-const Input = ({ label, value, name, simple, ...props }) => {
+const Input = ({ label, value, name, simple, autoComplete, ...props }) => {
 
 	return (
 		<div className={styles.inputContainer}>
@@ -10,7 +10,7 @@ const Input = ({ label, value, name, simple, ...props }) => {
 				type='text'
 				required
 				className={styles.Input}
-				autoComplete='username'
+				autoComplete={autoComplete || 'username'}
 				{...props.field}
 				{...props}
 				value={value || (!!simple && props.field.value) || (props.field && props.field.value.label) || ''}

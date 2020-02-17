@@ -3,12 +3,13 @@ import React from 'react';
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 
-import { withRouter, Redirect } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
+import PropTypes from "prop-types";
 
 import styles from '../Form/Form.module.css';
 import localStyles from './Answers.module.css';
 
-const Answers = ({ match }) => {
+const Answers = ({ match, user }) => {
 
     const [getDataStatus, setGetDataStatus] = React.useState(false);
 
@@ -18,36 +19,40 @@ const Answers = ({ match }) => {
     React.useEffect(() => {
         const db = firebase.firestore();
         const docId = match.params.id;
-        const dbRef = db.collection("forms").doc(docId).collection("answers");
+        const dbRef = db.collection(user.uid).doc(docId).collection("answers");
         dbRef.get()
             .then(res => {
-                if (!res.empty) {
-                    const data = res.docs.map(doc => doc.data())
-                    setAnswersCollection(data)
-                    db.collection("forms").doc(docId).get()
-                        .then(
-                            res => {
-                                if (res.exists) {
-                                    const data = res.data()
-                                    setForm(data)
-                                    // console.log("DATA ", data)
-                                    setGetDataStatus(true)
-                                }
-                            }
-                        )
+                const data = res.docs.map(doc => doc.data())
+                setAnswersCollection(data)
+                if (data.length === 0) {
+                    setGetDataStatus(true)
                 }
-                return res.empty && <Redirect to="/" />
+                db.collection(user.uid).doc(docId).get()
+                    .then(
+                        res => {
+                            if (res.exists) {
+                                const data = res.data()
+                                setForm(data)
+                                setGetDataStatus(true)
+                            }
+                        }
+                    )
             })
             .catch(
                 error => console.log('error: ', error)
             )
-    }, [match])
+    }, [match, user.uid])
 
     return (
         <div className={styles.formContainer}>
             {!getDataStatus &&
-                <div>
+                <div className={styles.formContent}>
                     Dane pobieram szu szu szu!
+                </div>
+            }
+            {getDataStatus && answersCollection.length === 0 &&
+                <div className={styles.formContent}>
+                    Brak Odpowiedzi
                 </div>
             }
             {getDataStatus && answersCollection && form &&
@@ -97,8 +102,18 @@ const Answers = ({ match }) => {
                     )}
                 </>
             }
+
         </div>
     )
 }
+
+Answers.propTypes = {
+    user: PropTypes.shape({
+        name: PropTypes.string,
+        photo: PropTypes.string,
+        uid: PropTypes.string,
+        email: PropTypes.string,
+    }).isRequired
+};
 
 export default withRouter(Answers);

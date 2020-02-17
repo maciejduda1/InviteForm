@@ -1,68 +1,36 @@
-import React from "react";
-import styles from "./LoginScreen.module.css";
-import { Formik, Form, Field } from "formik";
+import React from 'react';
+import styles from './LoginScreen.module.css';
 
-import Button from "../../components/Button/Button";
-import Input from "../../components/input/Input";
-
-import * as firebase from "firebase/app";
+import * as firebase from 'firebase/app';
 import "firebase/auth";
-import "firebase/firestore";
-import LoginUser from "./LoginUser/LoginUser";
+import 'firebase/firestore';
+
+import FacebookButton from '../../components/FacebookButton/FacebookButton';
+import RegisterUser from './RegisterUser/RegisterUser';
+import LoginUser from './LoginUser/LoginUser';
 
 const LoginScreen = () => {
-  const initialValues = {
-    login: "",
-    password: ""
-  };
 
-  const loginFaceBook = () => {
-    // const ui = new firebase.auth.AuthUI(firebase.auth());
-    const provider = new firebase.auth.FacebookAuthProvider();
+    const [loginOrRegister, toggleLoginOrRegister] = React.useState(true);
 
-    // ui.start('#firebaseui-auth-container', {
-    //     signInOptions: [
-    //         firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-    //     ],
-    // });
+    const loginFaceBook = () => {
+        const provider = new firebase.auth.FacebookAuthProvider();
+        firebase.auth().signInWithPopup(provider)
+            .then(res => console.log(res))
+            .catch(error => console.log(error))
+    }
 
-    firebase
-      .auth()
-      .signInWithPopup(provider)
-      .then(res => console.log(res))
-      .catch(error => console.log(error));
-  };
-
-  function handleSubmit(values, actions) {
-    // const ui = new firebaseui.auth.AuthUI(firebase.auth());
-    // ui.start('#firebaseui-auth-container', {
-    //     signInOptions: [
-    //         firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-    //     ],
-    // });
-
-    console.log(values);
-  }
-
-  return (
-    <div className={styles.container} id='firebaseui-auth-container'>
-      <Formik
-        initialValues={initialValues}
-        onSubmit={(values, actions) => handleSubmit(values, actions)}
-      >
-        {({
-          values,
-          errors,
-          touched,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          isSubmitting
-          /* and other goodies */
-        }) => <LoginUser loginFaceBook={loginFaceBook} />}
-      </Formik>
-    </div>
-  );
-};
+    return (
+        <div className={styles.container} id="firebaseui-auth-container">
+            {loginOrRegister ? <LoginUser /> : <RegisterUser />}
+            <div className={styles.switch}>
+                lub <h4 className={styles.title} onClick={() => toggleLoginOrRegister(!loginOrRegister)}>{loginOrRegister ? 'Zarejestruj' : 'Zaloguj'}</h4>
+            </div>
+            <div>
+                <FacebookButton type="button" onClick={loginFaceBook} />
+            </div>
+        </div>
+    );
+}
 
 export default LoginScreen;

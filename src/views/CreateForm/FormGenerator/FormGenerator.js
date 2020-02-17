@@ -14,19 +14,19 @@ import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 import ButtonsSection from "../ButtonsSection/ButtonsSection";
 
-const FormGenerator = ({ deleteElement, history, match }) => {
+const FormGenerator = ({ deleteElement, history, match, user }) => {
 
 
     const initialValues = {
-        title: "",
-        description: '',
-        name: '',
+        title: "Tytuł formularza",
+        description: 'Opis wydarzenia',
+        name: 'Imię uczestnika',
         fields: [],
     };
 
     function handleSubmit(values, actions) {
         const db = firebase.firestore();
-        db.collection("forms").add(values)
+        db.collection(user.uid).add({ creationDate: firebase.firestore.Timestamp.now(), ...values })
             .then(res => history.push(`./${res.id}`))
             .catch(error => {
                 console.log('Nie udało się')
@@ -57,7 +57,6 @@ const FormGenerator = ({ deleteElement, history, match }) => {
 
     return (
         <>
-
             <Formik
                 enableReinitialize
                 onSubmit={(values, actions) => handleSubmit(values, actions)}
@@ -78,7 +77,6 @@ const FormGenerator = ({ deleteElement, history, match }) => {
                             <ButtonsSection
                                 sendSelectedField={(name) => {
                                     const el = sendSelectedField(name)
-                                    console.log(el)
                                     setFieldValue(`fields[${values.fields.length}]`, el)
                                 }}
                             />
@@ -168,7 +166,17 @@ FormGenerator.propTypes = {
         type: PropTypes.string,
         label: PropTypes.string,
         name: PropTypes.string
+    }),
+    user: PropTypes.shape({
+        name: PropTypes.string,
+        photo: PropTypes.string,
+        uid: PropTypes.string,
+        email: PropTypes.string,
     })
 };
+
+FormGenerator.defaultProps = {
+    user: null
+}
 
 export default withRouter(FormGenerator);

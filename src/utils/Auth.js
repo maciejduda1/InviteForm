@@ -1,6 +1,8 @@
 import React from "react";
 
-const Auth = ({ children, isAuthenticated }) => (
-  <>{isAuthenticated && children}</>
+const Auth = ({ auth, notAuth, isAuthenticated }) => (
+  <>
+    {isAuthenticated ? auth : notAuth}
+  </>
 );
 export default Auth;
