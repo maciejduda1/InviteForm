@@ -1,5 +1,36 @@
 .container {
 margin: 25px;
+position: relative;
+}
+
+.userContainer {
+  position: relative;
+}
+
+.container::before {
+  content: 'Sekcja tytułowa formularza';
+  position: absolute;
+  font-size: 1.6rem;
+  left: 10px;
+  top: -8px;
+  z-index: 3;
+  background-color: white;
+  opacity:  0.8;
+  font-family: 'Montserrat';
+  font-weight: 600;
+}
+
+.userContainer::before {
+  content: 'Nazwa pola z określeniem wypełniającego';
+  position: absolute;
+  font-size: 1.6rem;
+  left: 10px;
+  top: -8px;
+  z-index: 3;
+  background-color: white;
+  opacity:  0.8;
+  font-family: 'Montserrat';
+  font-weight: 600;
 }
 
 .small {

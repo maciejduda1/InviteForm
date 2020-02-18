@@ -43,8 +43,7 @@
   margin-right: 5px;
 }
 
-.Header__link:hover,
-.Header__listItem {
+.Header__link:hover {
   cursor: pointer;
 }
 

@@ -18,8 +18,9 @@
 
 .button:disabled,
 .button:disabled:hover {
-  background-color: #f8deb3;
-  color: #3f4158;
+  background-color: #dfd9cf;
+  color: #3a3a3b;
+  border-color: #3a3a3b;
 }
 
 .normal {

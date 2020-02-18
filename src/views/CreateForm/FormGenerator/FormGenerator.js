@@ -13,6 +13,7 @@ import uuid from 'uuid/v4'
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 import ButtonsSection from "../ButtonsSection/ButtonsSection";
+import Schema from "./FormGenerator.schema";
 
 const FormGenerator = ({ deleteElement, history, match, user }) => {
 
@@ -61,6 +62,7 @@ const FormGenerator = ({ deleteElement, history, match, user }) => {
                 enableReinitialize
                 onSubmit={(values, actions) => handleSubmit(values, actions)}
                 initialValues={initialValues}
+                validationSchema={Schema}
             >
                 {({
                     values,
@@ -85,26 +87,29 @@ const FormGenerator = ({ deleteElement, history, match, user }) => {
                                     <FieldGeneratorLayout isDeletable={false} deleteElement={() => deleteElement('title')}>
                                         <Field
                                             simple
-                                            defLabel='Tytuł formularza'
+                                            defLabel='Dodaj tytuł formularza'
                                             name='title'
                                             component={InputGenerator}
                                         />
                                         <div className={styles.descriptionContainer}>
                                             <Field
-                                                defLabel='Opis wydarzenia'
+                                                defLabel='Wprowadź opis wydarzenia'
                                                 name='description'
                                                 component={TextFieldGenerator}
                                             />
                                         </div>
                                     </FieldGeneratorLayout>
-                                    <FieldGeneratorLayout isDeletable={false} deleteElement={() => deleteElement('name')}>
-                                        <Field
-                                            simple
-                                            defLabel='Imię uczestnika'
-                                            name='name'
-                                            component={InputGenerator}
-                                        />
-                                    </FieldGeneratorLayout>
+                                    <div className={styles.userContainer}>
+                                        <FieldGeneratorLayout isDeletable={false} deleteElement={() => deleteElement('name')}>
+                                            <Field
+                                                simple
+                                                defLabel='Wpisz określenie wypełniającego'
+                                                name='name'
+                                                component={InputGenerator}
+                                            />
+
+                                        </FieldGeneratorLayout>
+                                    </div>
                                     <FieldArray
                                         name="fields"
                                         render={(arrayHelpers) => (

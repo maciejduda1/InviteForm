@@ -3,6 +3,7 @@ import styles from './ButtonsSection.module.css';
 import Button from '../../../components/Button/Button';
 import Select from '../../../components/Select/Select';
 import PropTypes from 'prop-types';
+import Helper from '../FormGenerator/Helper/Helper';
 
 const optionForSelect = [
     { value: 'text', label: 'Pole tekstowe' },
@@ -33,6 +34,7 @@ const ButtonsSection = ({ sendSelectedField }) => {
                     />
                 </div>
             </div>
+            <Helper />
         </div>
     );
 }

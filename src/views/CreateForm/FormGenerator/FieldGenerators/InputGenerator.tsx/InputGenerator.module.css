@@ -4,7 +4,9 @@
     align-items: center;
     text-align: center;
     width: 100%;
+    position: relative;
 }
+
 
 .component:hover {
     cursor: pointer;
