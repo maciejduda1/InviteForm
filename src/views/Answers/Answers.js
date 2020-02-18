@@ -17,31 +17,33 @@ const Answers = ({ match, user }) => {
     const [form, setForm] = React.useState()
 
     React.useEffect(() => {
-        const db = firebase.firestore();
-        const docId = match.params.id;
-        const dbRef = db.collection(user.uid).doc(docId).collection("answers");
-        dbRef.get()
-            .then(res => {
-                const data = res.docs.map(doc => doc.data())
-                setAnswersCollection(data)
-                if (data.length === 0) {
-                    setGetDataStatus(true)
-                }
-                db.collection(user.uid).doc(docId).get()
-                    .then(
-                        res => {
-                            if (res.exists) {
-                                const data = res.data()
-                                setForm(data)
-                                setGetDataStatus(true)
+        if (user) {
+            const db = firebase.firestore();
+            const docId = match.params.id;
+            const dbRef = db.collection(user.uid).doc(docId).collection("answers");
+            dbRef.get()
+                .then(res => {
+                    const data = res.docs.map(doc => doc.data())
+                    setAnswersCollection(data)
+                    if (data.length === 0) {
+                        setGetDataStatus(true)
+                    }
+                    db.collection(user.uid).doc(docId).get()
+                        .then(
+                            res => {
+                                if (res.exists) {
+                                    const data = res.data()
+                                    setForm(data)
+                                    setGetDataStatus(true)
+                                }
                             }
-                        }
-                    )
-            })
-            .catch(
-                error => console.log('error: ', error)
-            )
-    }, [match, user.uid])
+                        )
+                })
+                .catch(
+                    error => console.log('error: ', error)
+                )
+        }
+    }, [match, user])
 
     return (
         <div className={styles.formContainer}>
@@ -113,7 +115,7 @@ Answers.propTypes = {
         photo: PropTypes.string,
         uid: PropTypes.string,
         email: PropTypes.string,
-    }).isRequired
+    })
 };
 
 export default withRouter(Answers);
