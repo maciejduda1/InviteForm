@@ -1,5 +1,13 @@
 .iContainer {
     position: relative;
+    margin-bottom: 2.4rem;
+    min-width: 310px;
+}
+
+@media screen and (max-width: 500px) {
+    .iContainer {
+        min-width: unset;
+    }
 }
 
 .icon {
@@ -8,4 +16,11 @@
     top: 20px;
     right: 10px;
     z-index: 3;
+}
+
+.errorContainer {
+    font-size:  1.4rem;
+    position: absolute;
+    bottom: -1.8rem;
+    color: red;
 }

@@ -11,22 +11,24 @@ const MyForms = ({ user, history }) => {
     const [userForms, setForms] = React.useState([])
 
     React.useEffect(() => {
-        const db = firebase.firestore();
-        const dbRef = db.collection(user.uid);
-        dbRef.get()
-            .then(res => {
-                if (!res.empty) {
-                    // console.log(res)
-                    const userFormsData = res.docs.map(doc => ({ id: doc.id, ...doc.data() }))
-                    // console.log('DATA 1', userFormsData)
-                    setForms(userFormsData)
-                }
-                return res.empty && null
-            })
-            .catch(
-                error => console.log('error: ', error)
-            )
-    }, [user.uid])
+        if (user) {
+            const db = firebase.firestore();
+            const dbRef = db.collection(user.uid);
+            dbRef.get()
+                .then(res => {
+                    if (!res.empty) {
+                        // console.log(res)
+                        const userFormsData = res.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+                        // console.log('DATA 1', userFormsData)
+                        setForms(userFormsData)
+                    }
+                    return res.empty && null
+                })
+                .catch(
+                    error => console.log('error: ', error)
+                )
+        }
+    }, [user])
 
     function prepareDate(dateMS) {
         const months = ['styczeń', 'luty', 'marzec', 'kwiecień', 'maj', 'czerwiec', 'lipiec', 'sierpień', 'wrzesień', 'październik', 'listopad', 'grudzień'];
@@ -53,6 +55,6 @@ MyForms.propTypes = {
         photo: PropTypes.string,
         uid: PropTypes.string,
         email: PropTypes.string,
-    }).isRequired
+    })
 };
 export default withRouter(MyForms);
