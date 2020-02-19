@@ -21,27 +21,33 @@ const Answers = ({ match, user }) => {
             const db = firebase.firestore();
             const docId = match.params.id;
             const dbRef = db.collection(user.uid).doc(docId).collection("answers");
-            dbRef.get()
-                .then(res => {
-                    const data = res.docs.map(doc => doc.data())
+
+            async function getData() {
+                try {
+                    const answersData = dbRef.get()
+                    const formData = db.collection(user.uid).doc(docId).get()
+
+                    const allData = await Promise.all([answersData, formData])
+
+                    console.log(allData)
+
+                    const data = allData[0].docs.map(doc => doc.data())
                     setAnswersCollection(data)
                     if (data.length === 0) {
                         setGetDataStatus(true)
                     }
-                    db.collection(user.uid).doc(docId).get()
-                        .then(
-                            res => {
-                                if (res.exists) {
-                                    const data = res.data()
-                                    setForm(data)
-                                    setGetDataStatus(true)
-                                }
-                            }
-                        )
-                })
-                .catch(
-                    error => console.log('error: ', error)
-                )
+
+                    if (allData[1].exists) {
+                        const data = allData[1].data()
+                        setForm(data)
+                        setGetDataStatus(true)
+                    }
+                }
+                catch (error) {
+                    console.log('error: ', error)
+                }
+            }
+            getData()
         }
     }, [match, user])
 
