@@ -29,8 +29,6 @@ const Answers = ({ match, user }) => {
 
                     const allData = await Promise.all([answersData, formData])
 
-                    console.log(allData)
-
                     const data = allData[0].docs.map(doc => doc.data())
                     setAnswersCollection(data)
                     if (data.length === 0) {
