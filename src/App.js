@@ -21,6 +21,7 @@ import MyForms from "./views/MyForms/MyForms";
 import LoginScreen from "./views/LoginScreen/LoginScreen";
 
 const App = () => {
+
 	const [isAuthenticated, setIsAuthenticated] = React.useState(false);
 
 	const [appInitialized, setInit] = React.useState(false);
@@ -60,7 +61,7 @@ const App = () => {
 	}, []);
 
 	return (
-		<div className='App'>
+		<div className='App' data-testid="app">
 			<Router>
 				{appInitialized && authChecked && (
 					<Layout user={user}>

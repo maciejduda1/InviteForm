@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./Header.module.css";
 import { NavLink } from "react-router-dom";
 import Button from "../Button/Button";
+import PropTypes from 'prop-types';
 
 import * as firebase from "firebase/app";
 import "firebase/auth";
@@ -15,7 +16,7 @@ const Header = ({ user = null }) => {
 
 
 	return (
-		<div className={styles.Header__container}>
+		<div className={styles.Header__container} data-testid="header">
 			<div className={styles.Header__logo}>
 				<img
 					src='https://via.placeholder.com/150x45?text=Logo+of+Md-dev'
@@ -95,5 +96,14 @@ const Header = ({ user = null }) => {
 		</div>
 	);
 };
+
+Header.propTypes = {
+	user: PropTypes.shape({
+		name: PropTypes.string,
+		photo: PropTypes.string,
+		uid: PropTypes.string,
+		email: PropTypes.string,
+	}).isRequired
+}
 
 export default Header;

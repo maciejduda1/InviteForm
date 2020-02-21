@@ -86,7 +86,6 @@ const FormGenerator = ({ deleteElement, history, match, user }) => {
                                 <Form>
                                     <FieldGeneratorLayout isDeletable={false} deleteElement={() => deleteElement('title')}>
                                         <Field
-                                            simple
                                             defLabel='Dodaj tytuł formularza'
                                             name='title'
                                             component={InputGenerator}
@@ -102,7 +101,6 @@ const FormGenerator = ({ deleteElement, history, match, user }) => {
                                     <div className={styles.userContainer}>
                                         <FieldGeneratorLayout isDeletable={false} deleteElement={() => deleteElement('name')}>
                                             <Field
-                                                simple
                                                 defLabel='Wpisz określenie wypełniającego'
                                                 name='name'
                                                 component={InputGenerator}
@@ -118,21 +116,13 @@ const FormGenerator = ({ deleteElement, history, match, user }) => {
                                                     <FieldGeneratorLayout key={fieldFormik.fieldId} deleteElement={() => arrayHelpers.remove(index)}>
                                                         {fieldFormik && fieldFormik.type === 'text' &&
                                                             <Field
-                                                                name={`fields[${index}]`}
-                                                            >
-                                                                {({ field, form, meta }) => (
-                                                                    <InputGenerator
-                                                                        defLabel={field.label}
-                                                                        name={`fields[${index}]`}
-                                                                        fieldFormik={fieldFormik}
-                                                                        field={field}
-                                                                        onChange={(e) => setFieldValue(`fields[${index}]`, {
-                                                                            ...values.fields[index],
-                                                                            label: e.target.value,
-                                                                        })}
-                                                                    />
-                                                                )}
-                                                            </Field>
+                                                                name={`fields[${index}].label`}
+                                                                onChange={(e) => setFieldValue(`fields[${index}]`, {
+                                                                    ...values.fields[index],
+                                                                    label: e.target.value,
+                                                                })}
+                                                                component={InputGenerator}
+                                                            />
                                                         }
                                                         {fieldFormik && fieldFormik.type === "checkbox" && (
                                                             <Field
