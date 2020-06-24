@@ -1,13 +1,12 @@
-import React from "react";
-import PropTypes from "prop-types";
-import styles from "./Input.module.css";
+import React from 'react';
+import PropTypes from 'prop-types';
+import styles from './Input.module.css';
 
 const Input = ({ label, name, autoComplete, ...props }) => {
-
 	return (
 		<div className={styles.inputContainer}>
 			<input
-				data-testid="input"
+				data-testid='input'
 				id={name}
 				name={name}
 				type='text'
@@ -24,14 +23,13 @@ const Input = ({ label, name, autoComplete, ...props }) => {
 };
 
 Input.propTypes = {
-	autoComplete: PropTypes.string,
-	name: PropTypes.string.isRequired,
 	label: PropTypes.string.isRequired,
+	autoComplete: PropTypes.string,
+	name: PropTypes.string,
 };
 
 Input.defaultProps = {
-	label: 'Nazwa Pola'
-}
-
+	label: 'Nazwa Pola',
+};
 
 export default Input;
