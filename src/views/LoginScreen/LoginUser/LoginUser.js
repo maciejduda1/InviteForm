@@ -23,7 +23,7 @@ const LoginUser = () => {
 		firebase
 			.auth()
 			.signInWithEmailAndPassword(login, password)
-			.catch((error) => actions.setSubmiting(false));
+			.catch((error) => actions.setSubmitting(false));
 	}
 
 	return (
@@ -40,52 +40,38 @@ const LoginUser = () => {
 				handleBlur,
 				handleSubmit,
 				isSubmitting,
-				/* and other goodies */
 			}) => (
 				<Form>
 					<div className={styles.iContainer}>
-						<Field
-							type='text'
-							name='login'
-							label='Email'
-							component={Input}
-						/>
+						<Field type="text" name="login" label="Email" component={Input} />
 						{errors.login && touched.login && (
-							<div className={styles.errorContainer}>
-								{errors.login}
-							</div>
+							<div className={styles.errorContainer}>{errors.login}</div>
 						)}
 					</div>
 					<div className={styles.iContainer}>
 						<Field
-							autoComplete='off'
+							autoComplete="off"
 							type={showPassword ? 'text' : 'password'}
-							name='password'
-							label='Password'
+							name="password"
+							label="Password"
 							component={Input}
 						/>
 						{showPassword ? (
 							<i
-								onClick={() =>
-									toggleShowPassword(!showPassword)
-								}
+								onClick={() => toggleShowPassword(!showPassword)}
 								className={`far fa-eye ${styles.icon}`}
 							></i>
 						) : (
 							<i
-								onClick={() =>
-									toggleShowPassword(!showPassword)
-								}
+								onClick={() => toggleShowPassword(!showPassword)}
 								className={`far fa-eye-slash ${styles.icon}`}
 							></i>
 						)}
 						{errors.password && touched.password && (
-							<div className={styles.errorContainer}>
-								{errors.password}
-							</div>
+							<div className={styles.errorContainer}>{errors.password}</div>
 						)}
 					</div>
-					<Button type='submit' value='Zaloguj' size='big' />
+					<Button type="submit" value="Zaloguj" size="big" />
 				</Form>
 			)}
 		</Formik>

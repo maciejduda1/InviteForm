@@ -6,14 +6,15 @@ const Input = ({ label, name, autoComplete, ...props }) => {
 	return (
 		<div className={styles.inputContainer}>
 			<input
-				data-testid='input'
+				data-testid="input"
 				id={name}
 				name={name}
-				type='text'
+				type="text"
 				required
 				className={styles.Input}
 				autoComplete={autoComplete || 'off'}
 				{...props}
+				{...props.field}
 			/>
 			<label htmlFor={name} className={styles.Label}>
 				{label}
