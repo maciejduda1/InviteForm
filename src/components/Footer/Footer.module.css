@@ -1,11 +1,11 @@
-
 .container {
-    font-family: 'Montserrat';
-    font-weight: 600;
-    color: black;
-    /* background-color: rgb(236, 236, 238); */
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.6rem;
+	font-family: 'Montserrat';
+	font-weight: 600;
+	color: black;
+	/* background-color: rgb(236, 236, 238); */
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1.6rem;
+	margin-top: auto;
 }

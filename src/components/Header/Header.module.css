@@ -1,61 +1,75 @@
 .Header__container {
-  display: inline-flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 1.6rem;
-  box-shadow: 0 1px 1px 1px rgb(73, 73, 73);
+	display: inline-flex;
+	align-items: center;
+	justify-content: space-between;
+	font-size: 1.6rem;
+	box-shadow: 0 1px 1px 1px rgb(73, 73, 73);
 }
 .Header__logo {
-  margin: 0 15px;
+	margin: 0 15px;
 }
 
 .Header__list {
-  display: flex;
-  justify-content: flex-end;
-  height: 30px;
-  align-items: center;
-  list-style: none;
+	flex-wrap: wrap;
+	display: flex;
+	justify-content: flex-end;
+	min-height: 30px;
+	align-items: center;
+	list-style: none;
 }
 
 .Header__listItem,
 .Header__listItem_avatar {
-  padding: 0 15px;
-  color: #778899;
+	padding: 0 15px;
+	color: #778899;
 }
 
 .Header__listItem:hover {
-  padding: 0 15px;
-  color: #413e3e;
+	padding: 0 15px;
+	color: #413e3e;
 }
 
 .Header__link {
-  color: inherit;
-  text-decoration: none;
-  line-height: 3.2rem;
+	color: inherit;
+	text-decoration: none;
+	line-height: 3.2rem;
 }
 
 .Header__link_active {
-  border-bottom: 2px solid #ff7c7c;
+	border-bottom: 2px solid #ff7c7c;
 }
 
 .Header__link i {
-  color: #24292e;
-  margin-right: 5px;
+	color: #24292e;
+	margin-right: 5px;
 }
 
 .Header__link:hover {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 .Header__avatarContianer {
-  display: inline-flex;
-  align-items: center;
+	display: inline-flex;
+	align-items: center;
 }
 
 .Header_avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 15px;
-  object-fit: cover;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	margin-right: 15px;
+	object-fit: cover;
+}
+
+@media screen and (max-width: 576px) {
+	.Header__container {
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.Header__list {
+		flex-wrap: wrap;
+		justify-content: center;
+	}
 }

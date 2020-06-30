@@ -22,7 +22,16 @@ const LoginScreen = () => {
 	};
 
 	return (
-		<div className={styles.container} id='firebaseui-auth-container'>
+		<div className={styles.container} id="firebaseui-auth-container">
+			<div className={styles.demo}>
+				<h3>Demo</h3>
+				<p>
+					login: <span>test@test.pl</span>
+				</p>
+				<p>
+					password: <span>test_acc</span>
+				</p>
+			</div>
 			{loginOrRegister ? <LoginUser /> : <RegisterUser />}
 			<div className={styles.switch}>
 				lub{' '}
@@ -34,7 +43,7 @@ const LoginScreen = () => {
 				</h4>
 			</div>
 			<div>
-				<FacebookButton type='button' onClick={loginFaceBook} />
+				<FacebookButton type="button" onClick={loginFaceBook} />
 			</div>
 		</div>
 	);

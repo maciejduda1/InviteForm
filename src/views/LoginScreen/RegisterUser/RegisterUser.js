@@ -56,113 +56,80 @@ const RegisterUser = () => {
 			}) => (
 				<Form>
 					<div className={styles.iContainer}>
-						<Field
-							simple
-							type='text'
-							name='name'
-							label='Wyświetlane imię'
-							component={Input}
-						/>
+						<Field type="text" name="name" label="Wyświetlane imię" component={Input} />
 						{errors.name && touched.name && (
-							<div className={styles.errorContainer}>
-								{errors.name}
-							</div>
+							<div className={styles.errorContainer}>{errors.name}</div>
 						)}
 					</div>
 					<div className={styles.iContainer}>
-						<Field
-							simple
-							type='text'
-							name='login'
-							label='Email'
-							component={Input}
-						/>
+						<Field type="text" name="login" label="Email" component={Input} />
 						{errors.login && touched.login && (
-							<div className={styles.errorContainer}>
-								{errors.login}
-							</div>
+							<div className={styles.errorContainer}>{errors.login}</div>
 						)}
 					</div>
 					<div className={styles.iContainer}>
 						<Field
-							autoComplete='off'
-							simple
+							autoComplete="off"
 							type={showPassword ? 'text' : 'password'}
-							name='password'
-							label='Password'
+							name="password"
+							label="Password"
 							component={Input}
 						/>
 						{showPassword ? (
 							<i
-								onClick={() =>
-									toggleShowPassword(!showPassword)
-								}
+								onClick={() => toggleShowPassword(!showPassword)}
 								className={`far fa-eye ${styles.icon}`}
 							></i>
 						) : (
 							<i
-								onClick={() =>
-									toggleShowPassword(!showPassword)
-								}
+								onClick={() => toggleShowPassword(!showPassword)}
 								className={`far fa-eye-slash ${styles.icon}`}
 							></i>
 						)}
 						{errors.password && touched.password && (
-							<div className={styles.errorContainer}>
-								{errors.password}
-							</div>
+							<div className={styles.errorContainer}>{errors.password}</div>
 						)}
 					</div>
 					<div className={styles.iContainer}>
 						<Field
-							autoComplete='off'
-							simple
+							autoComplete="off"
 							type={showPassword ? 'text' : 'password'}
-							name='confirmPassword'
-							label='Retype Password'
+							name="confirmPassword"
+							label="Retype Password"
 							component={Input}
 						/>
 						{showPassword ? (
 							<i
-								onClick={() =>
-									toggleShowPassword(!showPassword)
-								}
+								onClick={() => toggleShowPassword(!showPassword)}
 								className={`far fa-eye ${styles.icon}`}
 							></i>
 						) : (
 							<i
-								onClick={() =>
-									toggleShowPassword(!showPassword)
-								}
+								onClick={() => toggleShowPassword(!showPassword)}
 								className={`far fa-eye-slash ${styles.icon}`}
 							></i>
 						)}
 						{errors.confirmPassword && touched.confirmPassword && (
-							<div className={styles.errorContainer}>
-								{errors.confirmPassword}
-							</div>
+							<div className={styles.errorContainer}>{errors.confirmPassword}</div>
 						)}
 					</div>
 					<div className={styles.iContainer}>
 						<Field
-							autoComplete='off'
-							simple
+							autoComplete="off"
 							type={'url'}
-							name='url'
-							label='Url avatara'
+							name="url"
+							label="Url avatara"
 							component={Input}
 						/>
 						{errors.url && touched.url && (
-							<div className={styles.errorContainer}>
-								{errors.url}
-							</div>
+							<div className={styles.errorContainer}>{errors.url}</div>
 						)}
 					</div>
 					<Button
 						disabled={isSubmitting || !isValid}
-						type='submit'
-						value='Zarejestruj'
-						size='big'
+						type="submit"
+						value="Zarejestruj"
+						size="big"
 					/>
 				</Form>
 			)}

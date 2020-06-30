@@ -22,19 +22,21 @@ const InviteForm = ({ match, history, user }) => {
 		setGettingData(true);
 		const docId = match.params.id;
 		const db = firebase.firestore();
-		db.collection(user.uid)
-			.doc(docId)
-			.get()
-			.then((res) => {
-				if (res.exists) {
-					const data = res.data();
-					setForm(data);
-					return setGettingData(false);
-				}
-				return !res.exists && history.push('/');
-			})
-			.catch((error) => console.log('error: ', error));
-	}, [match, history, user.uid]);
+		if (!!user) {
+			db.collection(user.uid)
+				.doc(docId)
+				.get()
+				.then((res) => {
+					if (res.exists) {
+						const data = res.data();
+						setForm(data);
+						return setGettingData(false);
+					}
+					return !res.exists && history.push('/');
+				})
+				.catch((error) => console.log('error: ', error));
+		}
+	}, [match, history, user]);
 
 	const initialValues = {
 		name: '',
@@ -167,7 +169,16 @@ InviteForm.propTypes = {
 		photo: PropTypes.string,
 		uid: PropTypes.string,
 		email: PropTypes.string,
-	}).isRequired,
+	}),
+};
+
+InviteForm.defaultProps = {
+	user: {
+		name: '',
+		photo: '',
+		uid: '',
+		email: '',
+	},
 };
 
 export default withRouter(InviteForm);
