@@ -1,27 +1,21 @@
-import React from "react";
-import "./App.css";
-import Layout from "./views/Layout/Layout";
-import firebaseConfig from "./firebase/firebaseConfig";
+import React from 'react';
+import './App.css';
+import Layout from './views/Layout/Layout';
+import firebaseConfig from './firebase/firebaseConfig';
 
-import * as firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/firestore";
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
 
-import {
-	BrowserRouter as Router,
-	Switch,
-	Route,
-	Redirect
-} from "react-router-dom";
-import Form from "./views/Form/Form";
-import Answers from "./views/Answers/Answers";
-import FormGenerator from "./views/CreateForm/FormGenerator/FormGenerator";
-import Auth from "./utils/Auth";
-import MyForms from "./views/MyForms/MyForms";
-import LoginScreen from "./views/LoginScreen/LoginScreen";
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import Form from './views/Form/Form';
+import Answers from './views/Answers/Answers';
+import FormGenerator from './views/CreateForm/FormGenerator/FormGenerator';
+import Auth from './utils/Auth';
+import MyForms from './views/MyForms/MyForms';
+import LoginScreen from './views/LoginScreen/LoginScreen';
 
 const App = () => {
-
 	const [isAuthenticated, setIsAuthenticated] = React.useState(false);
 
 	const [appInitialized, setInit] = React.useState(false);
@@ -37,13 +31,13 @@ const App = () => {
 	}, []);
 
 	React.useEffect(() => {
-		firebase.auth().onAuthStateChanged(user => {
+		firebase.auth().onAuthStateChanged((user) => {
 			if (user) {
 				const userData = {
 					name: user.displayName,
 					photo: user.photoURL,
 					uid: user.uid,
-					email: user.email
+					email: user.email,
 				};
 				setData();
 				async function setData() {
@@ -51,7 +45,6 @@ const App = () => {
 					await setUser(userData);
 					setCheckAuth(true);
 				}
-
 			} else {
 				setUser(null);
 				setCheckAuth(true);
@@ -61,42 +54,45 @@ const App = () => {
 	}, []);
 
 	return (
-		<div className='App' data-testid="app">
+		<div className="App" data-testid="app">
 			<Router>
 				{appInitialized && authChecked && (
 					<Layout user={user}>
-						<Auth isAuthenticated={isAuthenticated}
+						<Auth
+							isAuthenticated={isAuthenticated}
 							auth={
 								<Switch>
-									<Route path='/myforms' exact>
+									<Route path="/myforms" exact>
 										<MyForms user={user} />
 									</Route>
-									<Route path='/create' exact>
+									<Route path="/create" exact>
 										<FormGenerator user={user} />
 									</Route>
-									<Route path='/:id' exact>
+									<Route path="/:id" exact>
 										<Form user={user} />
 									</Route>
-									<Route path='/:id/answers' exact>
+									<Route path="/:id/answers" exact>
 										<Answers user={user} />
 									</Route>
-									<Route path='/' exact>
-										<Redirect to='/create' />
+									<Route path="/" exact>
+										<Redirect to="/create" />
 									</Route>
 								</Switch>
 							}
 							notAuth={
 								<Switch>
-									<Route path='/' exact>
+									<Route path="/" exact>
 										<LoginScreen />
 									</Route>
-									<Route path='*'>
+									<Route path="/:id" exact>
+										<Form user={user} />
+									</Route>
+									<Route path="*">
 										<Redirect to="/" />
 									</Route>
 								</Switch>
 							}
-						>
-						</Auth>
+						></Auth>
 					</Layout>
 				)}
 			</Router>

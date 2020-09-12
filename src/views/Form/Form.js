@@ -22,20 +22,19 @@ const InviteForm = ({ match, history, user }) => {
 		setGettingData(true);
 		const docId = match.params.id;
 		const db = firebase.firestore();
-		if (!!user) {
-			db.collection(user.uid)
-				.doc(docId)
-				.get()
-				.then((res) => {
-					if (res.exists) {
-						const data = res.data();
-						setForm(data);
-						return setGettingData(false);
-					}
-					return !res.exists && history.push('/');
-				})
-				.catch((error) => console.log('error: ', error));
-		}
+
+		db.collection('forms')
+			.doc(docId)
+			.get()
+			.then((res) => {
+				if (res.exists) {
+					const data = res.data();
+					setForm(data);
+					return setGettingData(false);
+				}
+				return !res.exists && history.push('/');
+			})
+			.catch((error) => console.log('error: ', error));
 	}, [match, history, user]);
 
 	const initialValues = {
@@ -73,7 +72,9 @@ const InviteForm = ({ match, history, user }) => {
 		if (values.name) {
 			const db = firebase.firestore();
 			const docId = match.params.id;
-			const dbRef = db.collection(user.uid).doc(docId).collection('answers').doc(values.name);
+			// const dbRef = db.collection(user.uid).doc(docId).collection('answers').doc(values.name);
+			const dbRef = db.collection('forms').doc(docId).collection('answers').doc(values.name);
+
 			dbRef
 				.set(values)
 				.then((res) => history.push(`${match.url}/answers`))

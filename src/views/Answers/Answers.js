@@ -19,12 +19,13 @@ const Answers = ({ match, user }) => {
 		if (user) {
 			const db = firebase.firestore();
 			const docId = match.params.id;
-			const dbRef = db.collection(user.uid).doc(docId).collection('answers');
+			// const dbRef = db.collection(user.uid).doc(docId).collection('answers');
+			const dbRef = db.collection('forms').doc(docId).collection('answers');
 
 			async function getData() {
 				try {
 					const answersData = dbRef.get();
-					const formData = db.collection(user.uid).doc(docId).get();
+					const formData = db.collection('forms').doc(docId).get();
 
 					const allData = await Promise.all([answersData, formData]);
 
