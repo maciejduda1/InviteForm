@@ -10,10 +10,14 @@ const MyForms = ({ user, history }) => {
 	const [userForms, setForms] = React.useState([]);
 
 	React.useEffect(() => {
+		console.log('WBIJAM');
 		if (user) {
+			console.log('WBIJAM2');
 			const db = firebase.firestore();
-			const dbRef = db.collection(user.uid);
+			const dbRef = db.collection('forms');
+
 			dbRef
+				.where('creatorId', '==', user.uid)
 				.get()
 				.then((res) => {
 					if (!res.empty) {

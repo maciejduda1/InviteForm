@@ -29,20 +29,19 @@ const FormGenerator = ({ deleteElement, history, match, user }) => {
 		const formsRef = db.collection('forms').doc();
 		const userRef = db.collection(user.uid).doc(formsRef.id);
 
-		batch.set(formsRef, { creationDate: firebase.firestore.Timestamp.now(), ...values });
+		batch.set(formsRef, {
+			creationDate: firebase.firestore.Timestamp.now(),
+			creatorId: user.uid,
+			...values,
+		});
 		batch.set(userRef, { formid: formsRef.id });
 
-		batch.commit();
-		// .then((res) => history.push(`./${res.id}`))
-		// .catch((error) => {
-		// 	console.log('Nie udało się');
-		// });
-
-		// db.collection(user.uid).add({ creationDate: firebase.firestore.Timestamp.now(), ...values })
-		//     .then(res => history.push(`./${res.id}`))
-		//     .catch(error => {
-		//         console.log('Nie udało się')
-		//     })
+		batch
+			.commit()
+			.then((res) => history.push(`./${res.id}`))
+			.catch((error) => {
+				console.log('Nie udało się');
+			});
 	}
 
 	const sendSelectedField = (selectedOption) => {
